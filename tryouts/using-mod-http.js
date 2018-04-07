@@ -6,14 +6,23 @@ var http = require('http'),
 
 
 var server = http.createServer(function(req, res) {
-    // print request headers
-    console.log(req.headers);
+    /* handling requests for different url paths; the url paths
+     * are regarded as pages for this sample application. Target
+     * paths to be handled:
+     *  - /
+     *  - /customer
+     *  - /admin
+     */
 
-    // set a custom response header
-    res.setHeader('appID', '1234');
-
-    // send response
-    res.write('Welcome to http NodeJS');
+    if (req.url == '/') {
+        res.write('Root page requested.');
+    } else if (req.url == '/customer') {
+        res.write('Customer page requested.');
+    } else if (req.url == '/admin') {
+        res.write('Admin page requested.');
+    } else {
+        res.write('Page not found.');
+    }
     res.end();
 });
 
