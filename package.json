@@ -1,0 +1,20 @@
+{
+  "name": "tanas",
+  "version": "0.1.0",
+  "description": "throw-away nodejs applications",
+  "main": "index.js",
+  "repository": "https://github.com/hkmshb/tanas",
+  "author": "Abdul-Hakeem Shaibu",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+  },
+  "dependencies": {
+    "atob": "^2.1.0",
+    "body-parser": "^1.18.2",
+    "btoa": "^1.2.1",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.13"
+  }
+}
