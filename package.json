@@ -7,14 +7,17 @@
   "author": "Abdul-Hakeem Shaibu",
   "license": "MIT",
   "private": true,
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
     "atob": "^2.1.0",
     "body-parser": "^1.18.2",
     "btoa": "^1.2.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "mongoose": "^5.0.13"
+    "mongoose": "^5.0.13",
+    "pg": "^7.4.1",
+    "sequelize": "^4.37.6",
+    "sqlite": "^2.9.1",
+    "typeorm": "^0.1.20"
   }
 }
