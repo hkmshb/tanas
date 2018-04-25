@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
     "target": "es6",
+    "lib": [
+      "es6"
+    ],
     "noImplicitAny": true
   },
   "files": [
-    "src/main.ts"
+    "src/main.ts",
+    "src/greet.ts"
   ]
 }
