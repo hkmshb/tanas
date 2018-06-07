@@ -1,0 +1,15 @@
+{
+  "name": "search",
+  "version": "0.1.0",
+  "description": "Try-out for ES & NodeJ",
+  "main": "src/index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "elasticsearch": "^15.0.0",
+    "express": "^4.16.3"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  }
+}
