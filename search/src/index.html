@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <style type="text/css">
+    input[type=text] {
+      width: 200px;
+    }
+    #results {
+      border: none;
+      width: 600px;
+      height: 600px;
+      padding-top: 10px;
+      margin: 20px auto;
+      border-top: solid 1px #ddd;
+    }
+  </style>
+</head>
+<body style="text-align: center;">
+  <form name="search-form">
+    <h3>Location Search</h3>
+    <input type="text" name="q" />
+    <button>Search</button>
+  </form>
+
+  <textarea id="results"></textarea>
+
+  <!-- le javascripts -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('button').on('click', function(e) {
+        e.preventDefault();
+        var $r = $('#results');
+        $r.val('');
+
+        var q = $('input[name=q]').val();
+        if (!q) {
+          alert('Please provide search term')
+        } else {
+          var url = 'http://localhost:8083/search?q=' + q;
+          $.get(url, function(data) {
+            if (!('hits' in data)) {
+              $r.val(data.response);
+            } else {
+              if (data.hits.total == 0) {
+                $r.val('No match found...')
+              } else {
+                var t = '';
+                for (let i=0; i < data.hits.total; i++) {
+                  t += JSON.stringify(data.hits.hits[i], null, 4);
+                }
+                $r.val(t);
+              }
+            }
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

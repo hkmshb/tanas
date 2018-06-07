@@ -1,5 +1,6 @@
 const esearch = require('elasticsearch');
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = 8083;
 
@@ -10,18 +11,29 @@ var client = new esearch.Client({
 });
 
 app.get('/', (req, res) => {
-    var output = 'Hello ES + NodeJS\n\n';
+  var p = path.join(__dirname, '/index.html');
+  res.sendFile(p);
+});
 
-    // contact configured ES
-    client.ping({}, (err) => {
-        if (err) {
-            output += 'ES Error: ' + err;
-        } else {
-            output += 'Tada!!! ES Reached...';
-        }
-        res.write(output);
-        res.end();
-    });
+app.get('/search', (req, res) => {
+  // contact configured ES
+  console.log('q: ' + req.query.q);
+  let params = {
+    index: 'location-state,location-lga,location-ward',
+    body: {
+      query: { 
+        match: { name: `${req.query.q}` }
+      }
+    }
+  }
+  client.search(params, (err, result) => {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(result);
+    }
+    res.end();
+  });
 });
 
 app.listen(port)
