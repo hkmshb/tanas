@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+  <style type="text/css">
+    body { text-align: center; }
+    #map { width: 100%; height: 650px; border: solid 1px #eee; }
+  </style>
+</head>
+<body>
+  <h3>WMS Viewer</h3>
+  <div id="map" />
+
+  <!-- le javascript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <script type="text/javascript">
+    var baselyrs = {}
+      , basemaps = {'OpenStreetMap': 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'};
+
+    function displayMultiLayersMap() {
+      for (var name of Object.keys(basemaps)) {
+        var url = basemaps[name];
+        var lyr = L.tileLayer(url, {id: name});
+        baselyrs[name] = lyr;
+      }
+
+      baselyrs['Population Map'] = getPopulationLayer();
+
+      var map = L.map('map', {
+        layers: Object.values(baselyrs)[0],
+        scrollWheelZoom: false,
+        closePopupOnClick: false,
+        zoomControl: false,
+        zoomSnap: 0.8,
+        zoom: 6
+      }).setView([9.261742, 7.498716], 6);
+
+      var zoomr = L.control.zoom({position: 'topright'});
+      var togglr = L.control.layers({}, baselyrs, {collapsed: false,});
+
+      togglr.addTo(map);
+      zoomr.addTo(map);
+    }
+
+    function displaySingleLayerMap() {
+      var map = L.map('map').setView([9.261742, 7.498716], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data',
+        maxZoom: 18,
+        id: 'OpenStreetMap'
+      }).addTo(map);
+    }
+
+    function getPopulationLayer() {
+      return L.tileLayer.wms('${GRID_WMS_BASEURL}', {
+        layers: '${GRID_WMS_LAYER}'
+      })
+    }
+
+    $(function() {  // on document load
+      // displaySingleLayerMap();
+      displayMultiLayersMap();
+    });
+  </script>
+</body>
+</html>
